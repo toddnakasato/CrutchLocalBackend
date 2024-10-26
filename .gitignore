@@ -1,0 +1,46 @@
+# Node.js dependencies
+node_modules/
+package-lock.json
+
+# Environment variables
+.env
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Nodemon specific
+.pids
+nodemon-debug.log
+
+# Editor & IDE specific files
+.vscode/
+.idea/
+*.sublime-workspace
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Prettier configuration
+.prettierignore
+
+# Optional npm cache directory
+.npm
+
+# Coverage reports
+coverage/
+*.lcov
+
+# Build files
+dist/
+build/
