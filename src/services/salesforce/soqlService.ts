@@ -4,7 +4,9 @@ import axios from 'axios';
 import { getAccessToken, orgs, orgMap } from './salesforceService';
 
 function connectToDatabase(): sqlite3.Database {
-  const dbPath = path.join(__dirname, '..', '..', 'localData', 'crutchDb.sqlite');
+  // Corrected path to access 'localData' at the same level as 'src'
+  const dbPath = path.join(__dirname, '..', '..', '..','localData', 'crutchDb.sqlite');
+
   const db = new sqlite3.Database(dbPath, (err) => {
     if (err) {
       console.error('Could not connect to SQLite database', err);
