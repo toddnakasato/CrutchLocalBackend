@@ -1,10 +1,10 @@
-// toolingQuery.js
+// toolingQuery.ts
 
-const axios = require('axios');
-const { getAccessToken, orgs, orgMap } = require('./connectToSalesforce'); // Import orgMap
+import axios from 'axios';
+import { getAccessToken, orgs, orgMap } from './connectToSalesforce';
 
 // Function to get a list of sObjects using the Tooling API
-async function getSObjectList(orgName) {
+export async function getSObjectList(orgName: string): Promise<any[]> {
   const orgIndex = orgMap[orgName];
   const orgConfig = orgs[orgIndex];
 
@@ -28,11 +28,7 @@ async function getSObjectList(orgName) {
 
     // Return the list of sObjects
     return response.data.sobjects;
-  } catch (error) {
+  } catch (error: any) {
     throw new Error(`Failed to retrieve sObjects for ${orgName}: ${error.message}`);
   }
 }
-
-module.exports = {
-  getSObjectList,
-};

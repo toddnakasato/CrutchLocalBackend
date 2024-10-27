@@ -1,7 +1,5 @@
-// __tests__/connectToSalesforce.test.js
-
-const { orgs, orgMap, getAccessToken, connectToSalesforce, makeApiCall } = require('../src/connectToSalesforce');
-const axios = require('axios');
+import { orgs, orgMap, getAccessToken, connectToSalesforce, makeApiCall } from '../src/connectToSalesforce';
+import axios from 'axios';
 
 /*----------------------------------------------------------------------------------------------------
  *
@@ -66,7 +64,6 @@ describe('orgMap', () => {
  ----------------------------------------------------------------------------------------------------*/
 describe('getAccessToken', () => {
     // Mock orgConfig object for testing
-    
     const mockOrgConfig = {
         name: 'FF Prod',
         consumerKey: 'mockConsumerKey',
@@ -77,7 +74,7 @@ describe('getAccessToken', () => {
 
     // Setup the mock response for axios.post
     beforeEach(() => {
-        axios.post.mockResolvedValue({
+        (axios.post as jest.Mock).mockResolvedValue({
             data: {
                 access_token: 'mockAccessToken',
                 instance_url: 'https://mock.salesforce.com',
@@ -95,23 +92,18 @@ describe('getAccessToken', () => {
         const result = await getAccessToken(mockOrgConfig);
 
         expect(result).toHaveProperty('accessToken', 'mockAccessToken');
-        expect(result).toHaveProperty(
-            'instanceUrl',
-            'https://mock.salesforce.com'
-        );
+        expect(result).toHaveProperty('instanceUrl', 'https://mock.salesforce.com');
     });
 
     // Test case for handling errors
     it('should throw an error if the request fails', async () => {
-        axios.post.mockRejectedValue(new Error('Request failed'));
+        (axios.post as jest.Mock).mockRejectedValue(new Error('Request failed'));
 
         await expect(getAccessToken(mockOrgConfig)).rejects.toThrow(
             'Failed to fetch token for FF Prod: Request failed'
         );
     });
 });
-
-
 
 describe('makeApiCall', () => {
   const mockAccessToken = 'mockAccessToken';
@@ -125,7 +117,7 @@ describe('makeApiCall', () => {
   it('should log the API response on success', async () => {
       // Mocking axios.get to simulate a successful API response
       const mockResponseData = { data: { success: true } };
-      axios.get.mockResolvedValue(mockResponseData);
+      (axios.get as jest.Mock).mockResolvedValue(mockResponseData);
 
       // Spy on console.log to check if it's called with correct arguments
       const consoleLogSpy = jest.spyOn(console, 'log').mockImplementation();
@@ -155,7 +147,7 @@ describe('makeApiCall', () => {
   it('should log an error if the API call fails', async () => {
       // Mocking axios.get to simulate a failed API response
       const mockErrorMessage = 'Request failed';
-      axios.get.mockRejectedValue(new Error(mockErrorMessage));
+      (axios.get as jest.Mock).mockRejectedValue(new Error(mockErrorMessage));
 
       // Spy on console.error to check if it's called with correct arguments
       const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation();
@@ -178,5 +170,4 @@ describe('makeApiCall', () => {
  * Mocking Axios
  *
  ----------------------------------------------------------------------------------------------------*/
- jest.mock('axios');
-
+jest.mock('axios');

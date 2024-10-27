@@ -2,8 +2,9 @@ module.exports = {
     preset: 'ts-jest',
     testEnvironment: 'node',
     moduleFileExtensions: ['ts', 'js'],
-    testMatch: ['**/?(*.)+(spec|test).[tj]s?(x)'],
+    testMatch: ['**/__tests__/**/*.test.ts'],
     transform: {
         '^.+\\.ts$': 'ts-jest',
     },
+    watchman: false, // Disable Watchman
 };
